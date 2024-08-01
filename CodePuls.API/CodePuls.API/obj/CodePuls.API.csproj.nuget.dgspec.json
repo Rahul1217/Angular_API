@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Angular\\API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj": {}
+    "D:\\Angular\\API\\Angular_API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj": {}
   },
   "projects": {
-    "D:\\Angular\\API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj": {
+    "D:\\Angular\\API\\Angular_API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Angular\\API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj",
+        "projectUniqueName": "D:\\Angular\\API\\Angular_API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj",
         "projectName": "CodePuls.API",
-        "projectPath": "D:\\Angular\\API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj",
+        "projectPath": "D:\\Angular\\API\\Angular_API\\CodePuls.API\\CodePuls.API\\CodePuls.API.csproj",
         "packagesPath": "C:\\Users\\Rahul\\.nuget\\packages\\",
-        "outputPath": "D:\\Angular\\API\\CodePuls.API\\CodePuls.API\\obj\\",
+        "outputPath": "D:\\Angular\\API\\Angular_API\\CodePuls.API\\CodePuls.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Rahul\\AppData\\Roaming\\NuGet\\NuGet.Config",
