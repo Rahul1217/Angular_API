@@ -87,7 +87,7 @@ namespace CodePulse.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDto request)
         {
-            // Convert DTO to Domain Model
+            // Convert DTO to Domain Models
             var category = new Category
             {
                 Id = id,
