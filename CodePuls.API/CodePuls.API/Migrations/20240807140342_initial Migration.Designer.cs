@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodePuls.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240729113640_init")]
-    partial class init
+    [Migration("20240807140342_initial Migration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,21 +25,6 @@ namespace CodePuls.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BlogPostCategory", b =>
-                {
-                    b.Property<Guid>("BlogPostsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CategoriesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("BlogPostsId", "CategoriesId");
-
-                    b.HasIndex("CategoriesId");
-
-                    b.ToTable("BlogPostCategory");
-                });
-
             modelBuilder.Entity("CodePulse.API.Models.Domain.BlogPost", b =>
                 {
                     b.Property<Guid>("Id")
@@ -49,6 +34,9 @@ namespace CodePuls.API.Migrations
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -78,6 +66,8 @@ namespace CodePuls.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("BlogPosts");
                 });
 
@@ -100,19 +90,16 @@ namespace CodePuls.API.Migrations
                     b.ToTable("Categorys");
                 });
 
-            modelBuilder.Entity("BlogPostCategory", b =>
+            modelBuilder.Entity("CodePulse.API.Models.Domain.BlogPost", b =>
                 {
-                    b.HasOne("CodePulse.API.Models.Domain.BlogPost", null)
-                        .WithMany()
-                        .HasForeignKey("BlogPostsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CodePulse.API.Models.Domain.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("BlogPosts")
+                        .HasForeignKey("CategoryId");
+                });
+
+            modelBuilder.Entity("CodePulse.API.Models.Domain.Category", b =>
+                {
+                    b.Navigation("BlogPosts");
                 });
 #pragma warning restore 612, 618
         }
