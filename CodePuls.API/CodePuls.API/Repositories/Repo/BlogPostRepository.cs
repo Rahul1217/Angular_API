@@ -24,55 +24,53 @@ namespace CodePulse.API.Repositories.Implementation
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
-            //return await dbContext.BlogPosts.Include(x => x.Categories).ToListAsync();
-            return await dbContext.BlogPosts.ToListAsync();
+            return await dbContext.BlogPosts.Include(x => x.Categories).ToListAsync();
+            //return await dbContext.BlogPosts.ToListAsync();
         }
 
-        //public async Task<BlogPost?> DeleteAsync(Guid id)
-        //{
-        //    var existingBlogPost = await dbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<BlogPost?> DeleteAsync(Guid id)
+        {
+            var existingBlogPost = await dbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
 
-        //    if (existingBlogPost != null)
-        //    {
-        //        dbContext.BlogPosts.Remove(existingBlogPost);
-        //        await dbContext.SaveChangesAsync();
-        //        return existingBlogPost;
-        //    }
+            if (existingBlogPost != null)
+            {
+                dbContext.BlogPosts.Remove(existingBlogPost);
+                await dbContext.SaveChangesAsync();
+                return existingBlogPost;
+            }
 
-        //    return null;
-        //}
+            return null;
+        }
 
+        public async Task<BlogPost?> GetByIdAsync(Guid id)
+        {
+            return await dbContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == id);
+        }
 
+        public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
+        {
+            return await dbContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+        }
 
-        //public async Task<BlogPost?> GetByIdAsync(Guid id)
-        //{
-        //    return await dbContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.Id == id);
-        //}
+        public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
+        {
+            var existingBlogPost = await dbContext.BlogPosts.Include(x => x.Categories)
+                .FirstOrDefaultAsync(x => x.Id == blogPost.Id);
 
-        //public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
-        //{
-        //    return await dbContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
-        //}
+            if (existingBlogPost == null)
+            {
+                return null;
+            }
 
-        //public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
-        //{
-        //    var existingBlogPost = await dbContext.BlogPosts.Include(x => x.Categories)
-        //        .FirstOrDefaultAsync(x => x.Id == blogPost.Id);
+            // Update BlogPost
+            dbContext.Entry(existingBlogPost).CurrentValues.SetValues(blogPost);
 
-        //    if (existingBlogPost == null)
-        //    {
-        //        return null;
-        //    }
+            // Update Categories
+            existingBlogPost.Categories = blogPost.Categories;
 
-        //    // Update BlogPost
-        //    dbContext.Entry(existingBlogPost).CurrentValues.SetValues(blogPost);
+            await dbContext.SaveChangesAsync();
 
-        //    // Update Categories
-        //    existingBlogPost.Categories = blogPost.Categories;
-
-        //    await dbContext.SaveChangesAsync();
-
-        //    return blogPost;
-        //}
+            return blogPost;
+        }
     }
 }
